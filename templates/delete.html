@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% block title %}
+{% if contact.manager == request.user %}
+Delete {{ contact.name }}
+{% else %}
+Permission Error
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if contact.manager == request.user %}
+<div class="container">
+    <h2 class="heading font-weight-light text-center">Delete {{ contact.name }}</h2>
+    <hr />
+</div>
+<div class="container w-25 card p-4 mt-4">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="w-100 text-white text-center my-2 btn btn-danger" type="submit" value="Delete">
+
+    </form>
+</div>
+{% else %}
+<div class="container">
+    <h2 class="heading font-weight-light text-center">You do not have permission to access this page</h2>
+    <hr />
+</div>
+{% endif %}
+
+{% endblock %}
